@@ -1,7 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Date" %>
-<%@ page import="classes.Task" %>
+<%@ page import="dto.TaskDto" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -28,10 +28,10 @@
     Date lastAccessTime = new Date(session.getLastAccessedTime());%>
 
 <%
-    List<Task> tasks = (List<Task>) session.getAttribute("tasks");
-    if (tasks == null && tasks.isEmpty()) {
-        tasks = new ArrayList<>();
-        session.setAttribute("tasks", tasks);
+    List<TaskDto> taskDtos = (List<TaskDto>) session.getAttribute("taskDtos");
+    if (taskDtos == null && taskDtos.isEmpty()) {
+        taskDtos = new ArrayList<>();
+        session.setAttribute("taskDtos", taskDtos);
     }
 %>
 
@@ -44,45 +44,45 @@
     <br>
     <%-- <%= "Czas otwarcia sesji " + createTime %> <br>&lt;%&ndash;//w expresion można wyświetlić liste?&ndash;%&gt;--%>
     <h4 class="alert alert-warning" role="alert">
-        <%--<c:if test="${tasks.isEmpty()}">
+        <%--<c:if test="${taskDtos.isEmpty()}">
             Brak zadań do wykonania
         </c:if>--%>
 
 
         <ol>
-            <c:if test="${!empty param.newTask && tasks.add(Task.create(param.newTask))}"> <%-- ***o co w tym chodzi***--%>
+            <c:if test="${!empty param.newTask && taskDtos.add(Task.create(param.newTask))}"> <%-- ***o co w tym chodzi***--%>
                 <c:redirect url="displayTasks.jsp"/>
             </c:if>
 
             <c:if test="${!empty param.id}"> <%-- ***co to robi --%>
                 <%
                     int id = Integer.valueOf(request.getParameter("id"));
-                    tasks.remove(id);
+                    taskDtos.remove(id);
                 %>
                 <c:redirect url="displayTasks.jsp"/>
             </c:if>
 
 
-            <%--@elvariable id="task" type="pl.sdacademy.todo.dto.Task"--%>
-            <c:forEach var="task" items="${sessionScope['tasks']}">
+            <%--@elvariable id="taskDto" type="pl.sdacademy.todo.dto.Task"--%>
+            <c:forEach var="taskDto" items="${sessionScope['taskDtos']}">
 
                 <c:url var="deleteUrl" value="displayTasks.jsp">  <%-- zmieniam z pliku index na displayTasks i zadziałało --%>
 
-                    <c:param name="id" value="${tasks.indexOf(task)}"/>
+                    <c:param name="id" value="${taskDtos.indexOf(taskDto)}"/>
                 </c:url>
 
-                <li>${task.getDescription()} <a href="${deleteUrl}"> <fmt:message key="task.delete"/> </a></li>
+                <li>${taskDto.getDescription()} <a href="${deleteUrl}"> <fmt:message key="task.delete"/> </a></li>
 
             </c:forEach>
         </ol>
 
-        <c:if test="${tasks.isEmpty()}">
+        <c:if test="${taskDtos.isEmpty()}">
             <fmt:message key="task.empty"/>
         </c:if>
 
 
         <%--  <%
-              if (tasks.isEmpty()) {
+              if (taskDtos.isEmpty()) {
                   out.println("Brak zadań do wykonania");
               }
           %>--%>

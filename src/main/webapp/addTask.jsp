@@ -1,4 +1,4 @@
-<%@ page import="classes.Task" %>
+<%@ page import="dto.TaskDto" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -12,11 +12,11 @@
 <html>
 <%
     String title = "Dodaj kolejne zadanie";
-    List<Task> tasks = (List<Task>) session.getAttribute("tasks");
-    if (tasks == null || tasks.isEmpty()) {
+    List<TaskDto> taskDtos = (List<TaskDto>) session.getAttribute("taskDtos");
+    if (taskDtos == null || taskDtos.isEmpty()) {
         title = "Dodaj pierwsze zadanie!";
-        tasks = new ArrayList<>();
-        session.setAttribute("tasks", tasks);
+        taskDtos = new ArrayList<>();
+        session.setAttribute("taskDtos", taskDtos);
     }
     ;
 %>
@@ -49,7 +49,7 @@
     <input
             type="text" id="taskName"
             name="taskName"/><br/>
-            ograniczam task do jednego pola w formularzu--%>
+            ograniczam taskDto do jednego pola w formularzu--%>
 
     <label for="newTask">Nowe zadanie</label>
     <input
@@ -61,9 +61,9 @@
 
     <%-- <% String newTask = request.getParameter("newTask");
         if (newTask != null && !newTask.isEmpty()) {
-            Task task = new Task();
-            task.setDescription(newTask);
-            tasks.add(task); }
+            TaskDto taskDto = new TaskDto();
+            taskDto.setDescription(newTask);
+            taskDtos.add(taskDto); }
     %> --%>
 </div>
 </form>
