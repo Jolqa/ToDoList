@@ -6,11 +6,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<fmt:setLocale value="${param.lang}"/>
-<fmt:setBundle basename="labels"/>
-
+<fmt:setLocale value="${cookie.lang.value}"/>
+<fmt:setBundle basename="labels" var="labels"/>
+<fmt:setBundle basename="language" var="language"/>
 <html>
-<%
+<%--<%
     String title = "Dodaj kolejne zadanie";
     List<TaskDto> taskDtos = (List<TaskDto>) session.getAttribute("taskDtos");
     if (taskDtos == null || taskDtos.isEmpty()) {
@@ -19,7 +19,7 @@
         session.setAttribute("taskDtos", taskDtos);
     }
     ;
-%>
+%>--%>
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -29,42 +29,46 @@
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link href="css/style.css rel=stylesheet">
 
-    <title><%out.print(title);%></title>
+    <title><%--<%out.print(title);%>--%>
+        <fmt:message key="task.new" bundle="${labels}"/>
+    </title>
 
 </head>
 
 
 <body>
 <div class="container">
-<div class="alert alert-success" role="alert">
-    <h1><%out.print(title);%></h1>
-</div>
-<jsp:include page="header.jsp"/>
-<br>
-<br/>
-
-<form action="displayTasks.jsp" method="POST">
-
-    <%-- <label for="taskName">zadanie</label>
-    <input
-            type="text" id="taskName"
-            name="taskName"/><br/>
-            ograniczam taskDto do jednego pola w formularzu--%>
-
-    <label for="newTask">Nowe zadanie</label>
-    <input
-            type="text" id="newTask"
-            name="newTask"/><br/>
+    <div class="alert alert-success" role="alert">
+        <h1><%--<%out.print(title);%>--%>
+             <fmt:message key="task.new" bundle="${labels}"/>
+        </h1>
+    </div>
+    <jsp:include page="header.jsp"/>
     <br>
     <br/>
-    <input type="submit" value="Dodaj"/>
 
-    <%-- <% String newTask = request.getParameter("newTask");
-        if (newTask != null && !newTask.isEmpty()) {
-            TaskDto taskDto = new TaskDto();
-            taskDto.setDescription(newTask);
-            taskDtos.add(taskDto); }
-    %> --%>
+    <form action="displayTasks.jsp" method="POST">
+
+        <%-- <label for="taskName">zadanie</label>
+        <input
+                type="text" id="taskName"
+                name="taskName"/><br/>
+                ograniczam taskDto do jednego pola w formularzu--%>
+
+        <label for="newTask"> <fmt:message key="task.new" bundle="${labels}"/></label>
+        <input
+                type="text" id="newTask"
+                name="newTask"/><br/>
+        <br>
+        <br/>
+        <input type="submit" value= <fmt:message key="button.add" bundle="${labels}"/>>
+
+        <%-- <% String newTask = request.getParameter("newTask");
+            if (newTask != null && !newTask.isEmpty()) {
+                TaskDto taskDto = new TaskDto();
+                taskDto.setDescription(newTask);
+                taskDtos.add(taskDto); }
+        %> --%>
 </div>
 </form>
 </body>

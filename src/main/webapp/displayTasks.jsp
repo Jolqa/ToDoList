@@ -6,20 +6,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<fmt:setLocale value="${param.lang}"/>
-<fmt:setBundle basename="labels"/>
+<fmt:setLocale value="${cookie.lang.value}"/>
+<fmt:setBundle basename="labels" var="labels" />
+<fmt:setBundle basename="language" var="language"/>
 
 <html>
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link href="css/style.css rel=stylesheet">
-    <title><fmt:message key="task.all"/></title>
+    <title><fmt:message key="task.all"  bundle="${labels}"/></title>
 </head>
 <%
     // Get session creation time.
@@ -77,7 +77,7 @@
         </ol>
 
         <c:if test="${taskDtos.isEmpty()}">
-            <fmt:message key="task.empty"/>
+            <fmt:message key="task.empty"  bundle="${labels}" />
         </c:if>
 
 
